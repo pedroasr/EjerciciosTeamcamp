@@ -1,49 +1,39 @@
 import fastify, { FastifyInstance, FastifyRequest, FastifySchema } from 'fastify';
 import type { Logger } from 'pino';
-import { UserDB } from './UserDB';
+import { User, UserDB } from './UserDB';
 
 const UserSchema: FastifySchema = {
-    response: {
-        '200': {
+    body: {
             type: 'object',
             properties: {
                 id: { type: 'number' },
                 name: { type: 'string' },
                 age: { type: 'number' }
             }
-        }
     }
 };
 
-/* const MessageSchema: FastifySchema = {
+const idSchema: FastifySchema = {
     body: {
-        type: 'object',
-        properties: {
-            message: { type: 'string' },
-            from: { type: 'string', require },
-            to: { type: 'string' }
-        }
+            type: 'number',
+            properties: {
+                id: { type: 'number' }
+            }
     }
-}; */
-
-/* type MessageDTO = {
-    message: string;
-    from: string;
-    to: string;
 };
- */
-const userDB = new UserDB;
+
+var userDB = new UserDB;
 
 export function buildServer(logger: Logger): FastifyInstance {
     const server = fastify({ logger });
-    server.get('/users', { schema: UserSchema }, (req, reply) => {
+    server.get('/users', {}, (req, reply) => {
         reply
             .status(200)
             .headers({ 'content-type': 'application/json' })
             .send(userDB);
     });
 
-    server.get('/user/:id', {schema: UserSchema}, (req : FastifyRequest<{Params: {id: string}}>, reply) => {
+    server.get('/user/:id', {}, (req : FastifyRequest<{Params: {id: string}}>, reply) => {
         const { id } = req.params;
         const newId = parseInt(id);
         const user = userDB.findUser(newId);
@@ -52,28 +42,47 @@ export function buildServer(logger: Logger): FastifyInstance {
                 .status(200)
                 .headers({ 'content-type': 'application/json' })
                 .send(JSON.stringify(user[1]));
-        else
-            reply
-                .status(400)
-                .headers({ 'content-type': 'application/json' })
-                .send('No se ha encontrado el usuario.');
     });
 
-/*     server.post<{ Body: User }>(
-        '/message',
-        { schema: MessageSchema },
+     server.post<{ Body: User }>(
+        '/user',
+        { schema: UserSchema },
         (req, reply) => {
-            const { from } = req.body;
-            server.log.info(
-                `/message from ${from} ${JSON.stringify(req.body)}`
-            );
+            const {body} = req;
+            userDB.addUser(body);
             reply
                 .status(200)
                 .headers({ 'content-type': 'application/json' })
-                .send({ version: '0.0.1' });
+                .send({body});
         }
     );
- */
+
+    server.put<{ Body: User }>(
+        '/user/:id',
+        { schema: UserSchema},
+        (req, reply) => {
+            const {body} = req;
+            userDB.modifyUser(body);
+            reply
+                .status(200)
+                .headers({ 'content-type': 'application/json' })
+                .send({body});
+        }
+    );
+
+    server.delete<{ Body: number }>(
+        '/user/:id',
+        { schema: idSchema },
+        (req, reply) => {
+            const {id} = req;
+            userDB.removeUser(id);
+            reply
+                .status(200)
+                .headers({ 'content-type': 'application/json' })
+                .send({userDB})
+        }
+    )
+ 
     return server;
 }
 
