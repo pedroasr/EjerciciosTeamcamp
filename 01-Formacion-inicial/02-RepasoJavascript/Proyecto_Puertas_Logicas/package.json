@@ -1,0 +1,32 @@
+{
+  "name": "proyecto_puertas_logicas",
+  "version": "1.0.0",
+  "description": "Diseño de juguete basado en puertas logicas",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "build": "babel src -d build",
+    "start": "node build/main.js",
+    "dev": "nodemon --exec babel-node -- src/main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pedro Antonio",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "inquirer": "^8.2.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "eslint": "^8.12.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.1"
+  },
+  "presets": [
+    "@babel/preset-env"
+  ]
+}

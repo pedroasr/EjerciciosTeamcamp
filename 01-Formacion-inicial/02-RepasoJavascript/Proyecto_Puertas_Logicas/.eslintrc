@@ -1,0 +1,7 @@
+{
+  "rules": {
+    "nombre de la regla": ["error|warn|off", "parametro de la regla"],
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"]
+  }
+}
