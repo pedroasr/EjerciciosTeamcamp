@@ -34,7 +34,9 @@ const askQuestion = () => {
             }
         ])
         .then(answer => {
-            var input = answer.op.split(' '); //Crea un array con los datos separados por espacios
+            const input = answer.op.split(' '); //Crea un array con los datos separados por espacios
+            if (typeof input != 'string')
+                return console.log('Error inesperado al obtener datos por consola.')
             if (input == 'stop')
                 return console.log('Se ha terminado el juego.');
             else if (input == 'mostrar') {
@@ -76,15 +78,8 @@ const askQuestion = () => {
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[0]))
-                        ? true
-                        : false; //Comprueba si el primer parámetro es un registro (true).
-                    let flag2 = operationDB.find(
-                        registro => registro.name == input[0]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el registro origen (true).
-                    if (flag1 && flag2) {
+                    const flag1 = checkRegister(input[0]);//Comprueba si existe el registro origen (true).
+                    if (flag1) {
                         //El registro origen existe
                         let index_registro1 = operationDB.findIndex(
                             registro => registro.name == input[0]
@@ -288,5 +283,14 @@ const askQuestion = () => {
             }
         });
 };
+
+function checkRegister(register : string) : boolean[]{
+    if (Number.isInteger(parseInt(register)))
+        return [false, false];
+    else if (operationDB.find(registro => registro.name == register))
+        return [true, true];
+    else
+        return [true, false];
+}
 
 askQuestion();
