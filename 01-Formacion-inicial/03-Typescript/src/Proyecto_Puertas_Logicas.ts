@@ -78,16 +78,16 @@ const askQuestion = () => {
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    const flag1 = checkRegister(input[0]);//Comprueba si existe el registro origen (true).
+                    const flag1 = checkRegister(input[0]);
                     if (flag1) {
                         //El registro origen existe
-                        let index_registro1 = operationDB.findIndex(
+                        const index_registro1 = operationDB.findIndex(
                             registro => registro.name == input[0]
                         );
-                        let valor_registro1 =
+                        const valor_registro1 =
                             operationDB[index_registro1].value;
                         //Si el registro destino existe, sobreescribe el valor, sino crea una nueva entrada.
-                        operationDB.find(registro => registro.name == input[2])
+                        checkRegister(input[2])[1]
                             ? (operationDB[
                                   operationDB.findIndex(
                                       registro => registro.name == input[2]
@@ -98,10 +98,10 @@ const askQuestion = () => {
                                   value: valor_registro1
                               });
                         askQuestion();
-                    } else if (!flag1) {
+                    } else if (!flag1[0]) {
                         //El primer elemento es un número.
                         //Si el registro destino existe, sobreescribe el valor, sino crea una nueva entrada.
-                        operationDB.find(registro => registro.name == input[2])
+                        checkRegister(input[2])[1]
                             ? (operationDB[
                                   operationDB.findIndex(
                                       registro => registro.name == input[2]
@@ -124,31 +124,20 @@ const askQuestion = () => {
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[1]))
-                        ? true
-                        : false; //Comprueba si el primer parámetro es un registro (true).
-                    let flag2 = operationDB.find(
-                        registro => registro.name == input[1]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el registro origen (true).
-                    let flag3 = operationDB.find(
-                        registro => registro.name == input[3]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el registro origen (true).
-                    if (flag1 && flag2) {
+                    const flag1 = checkRegister(input[1]);
+                    const flag2 = checkRegister(input[3])[1];
+                    if (flag1) {
                         //El registro origen existe
-                        let index_registro1 = operationDB.findIndex(
+                        const index_registro1 = operationDB.findIndex(
                             registro => registro.name == input[1]
                         );
                         var valor_registro1 =
                             operationDB[index_registro1].value;
-                    } else if (!flag1)
+                    } else if (!flag1[0])
                         //El primer elemento es un número.
                         var valor_registro1 = parseInt(input[1]);
                     else throw Error('El registro origen no existe.');
-                    if (flag3) {
+                    if (flag2) {
                         operationDB[
                             operationDB.findIndex(
                                 registro => registro.name == input[3]
@@ -169,29 +158,11 @@ const askQuestion = () => {
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[0]))
-                        ? true
-                        : false; //Comprueba si el primer parámetro es un registro (true).
-                    let flag2 = operationDB.find(
-                        registro => registro.name == input[0]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el registro origen (true).
-                    let flag3 = !Number.isInteger(parseInt(input[2]))
-                        ? true
-                        : false; //Comprueba si el segundo parámetro es un registro (true).
-                    let flag4 = operationDB.find(
-                        registro => registro.name == input[2]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el segundo registro  (true).
-                    let flag5 = operationDB.find(
-                        registro => registro.name == input[4]
-                    )
-                        ? true
-                        : false; //Comprueba si existe el segundo registro  (true).
-                    if (flag1 && flag2) {
-                        let index_registro1 = operationDB.findIndex(
+                    const flag1 = checkRegister(input[0]);
+                    const flag2 = checkRegister(input[2]);
+                    const flag3 = checkRegister(input[4])[1];
+                    if (flag1) {
+                        const index_registro1 = operationDB.findIndex(
                             registro => registro.name == input[0]
                         );
                         var valor_registro1 =
@@ -199,8 +170,8 @@ const askQuestion = () => {
                     } else if (!flag1)
                         var valor_registro1 = parseInt(input[0]);
                     else throw Error('El registro origen no existe.');
-                    if (flag3 && flag4) {
-                        let index_registro2 = operationDB.findIndex(
+                    if (flag2) {
+                        const index_registro2 = operationDB.findIndex(
                             registro => registro.name == input[2]
                         );
                         var valor_registro2 =
@@ -210,7 +181,7 @@ const askQuestion = () => {
                     else throw Error('El registro secundario no existe.');
                     switch (input[1]) {
                         case 'AND':
-                            if (flag5) {
+                            if (flag3) {
                                 operationDB[
                                     operationDB.findIndex(
                                         registro => registro.name == input[4]
@@ -226,7 +197,7 @@ const askQuestion = () => {
                             }
                             break;
                         case 'OR':
-                            if (flag5) {
+                            if (flag3) {
                                 operationDB[
                                     operationDB.findIndex(
                                         registro => registro.name == input[4]
@@ -242,7 +213,7 @@ const askQuestion = () => {
                             }
                             break;
                         case 'LSHIFT':
-                            if (flag5) {
+                            if (flag3) {
                                 operationDB[
                                     operationDB.findIndex(
                                         registro => registro.name == input[4]
@@ -259,7 +230,7 @@ const askQuestion = () => {
                             }
                             break;
                         case 'RSHIFT':
-                            if (flag5) {
+                            if (flag3) {
                                 operationDB[
                                     operationDB.findIndex(
                                         registro => registro.name == input[4]
