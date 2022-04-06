@@ -49,17 +49,31 @@ export type ServerDeps = {
     dbNoSql: NOSQL_DB;
 };
 
-export function buildServer(logger: Logger): FastifyInstance {
+export function buildServer(
+    {
+        logger,
+        dbSql,
+        dbNoSql
+    }: ServerDeps) : FastifyInstance {
     const userDB = new UserDB;
     const server = fastify({ logger });
     
-    server.get('/users', {}, (req, reply) => {
+    server.get('/users', {}, 
+    async (req, reply) => {
+
+        const allMessagesSQL = await dbSql.runQuery(`SELECT * from users`);
+
+        /* const allMessagesNoSQL = await dbNoSql
+            .getCollection()
+            .find({})
+            .toArray();
+*/
         reply
             .status(200)
             .headers({ 'content-type': 'application/json' })
-            .send(userDB);
+            .send(allMessagesSQL);
     });
-
+ 
     server.get('/user/:id', {}, (req : FastifyRequest<{Params: {id: string}}>, reply) => {
         const { id } = req.params;
         const newId = parseInt(id);
@@ -74,9 +88,16 @@ export function buildServer(logger: Logger): FastifyInstance {
      server.post<{ Body: User }>(
         '/user',
         { schema: UserSchema },
-        (req, reply) => {
+        async (req, reply) => {
             const {body} = req;
-            userDB.addUser(body);
+            //userDB.addUser(body);
+            
+            await dbSql.runQuery(
+                `INSERT INTO users(id, name, age) VALUES('${body.id}', '${body.name}', '${body.age}')`
+            );
+
+            await dbNoSql.getCollection().insertOne(body);
+
             reply
                 .status(200)
                 .headers({ 'content-type': 'application/json' })
