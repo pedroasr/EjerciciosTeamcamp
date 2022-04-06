@@ -1,5 +1,5 @@
 import { buildConfig } from './config';
-import gracefulShutdown from './gratefull-shutdown';
+import gracefulShutdown from './graceful-shutdown';
 import 'make-promises-safe';
 import { buildApp } from './app'; 
 import { buildLogger } from './logger'; 
