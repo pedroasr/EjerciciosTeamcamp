@@ -12,7 +12,6 @@ export type Config = {
         host: string;
         port: number;
     };
-    fileDB: string;
     maria: {
         host: string;
         port: number;
@@ -61,7 +60,7 @@ export function buildConfig(): Config {
             host: {
                 doc: 'The host ip address to bind the http server.',
                 format: String,
-                default: '10.10.60.176',
+                default: 'localhost',
                 env: 'HTTP_HOST'
             },
             port: {
@@ -70,12 +69,6 @@ export function buildConfig(): Config {
                 default: 3099,
                 env: 'HTTP_PORT'
             }
-        },
-        fileDB: {
-            doc: 'Database name based on a file.',
-            format: String,
-            default: 'file-database',
-            env: 'FILE_DB_NAME'
         },
         maria: {
             host: {

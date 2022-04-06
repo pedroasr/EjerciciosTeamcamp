@@ -1,10 +1,9 @@
 import mariadb, { Connection } from 'mariadb';
 
-const CREATE_TABLE_MESSAGES = `CREATE TABLE IF NOT EXISTS messages (
-    id INT AUTO_INCREMENT NOT NULL,
-    message VARCHAR(200),
-    target VARCHAR(254),
-    origin VARCHAR(254),
+const CREATE_TABLE_USERS = `CREATE TABLE IF NOT EXISTS users (
+    id INT NOT NULL,
+    name VARCHAR(200),
+    age INT,
     PRIMARY KEY ( id )
 );`;
 
@@ -37,7 +36,7 @@ export function buildSQLDatabase({
             user
         });
         await pool.query(`USE ${database}`);
-        await pool.query(CREATE_TABLE_MESSAGES);
+        await pool.query(CREATE_TABLE_USERS);
     }
 
     async function close(): Promise<void> {
