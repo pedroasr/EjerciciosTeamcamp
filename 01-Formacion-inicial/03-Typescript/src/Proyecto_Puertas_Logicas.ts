@@ -17,7 +17,12 @@ console.log(
 );
 console.log('Para detener el juego, use el comando "stop".');
 
-var operationDB = [];
+type acumulador = {
+    name: string,
+    value: number
+}
+
+var operationDB : acumulador[] = [];
 
 const askQuestion = () => {
     inquirer
@@ -58,8 +63,7 @@ const askQuestion = () => {
                     ])
                     .then(ruta => {
                         let rawdata = fs.readFileSync(ruta.path);
-                        operationDB = JSON.parse(rawdata);
-                        console.log(operationDB);
+                        operationDB = JSON.parse(rawdata.toString());
                         askQuestion();
                     })
                     .catch(error => {
@@ -68,11 +72,11 @@ const askQuestion = () => {
                     });
             } else {
                 if (input.length == 3 && input[1] == '->') {
-                    if (Number.isInteger(parseInt(input[2], '10')))
+                    if (Number.isInteger(parseInt(input[2])))
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[0], '10'))
+                    let flag1 = !Number.isInteger(parseInt(input[0]))
                         ? true
                         : false; //Comprueba si el primer parámetro es un registro (true).
                     let flag2 = operationDB.find(
@@ -107,10 +111,10 @@ const askQuestion = () => {
                                   operationDB.findIndex(
                                       registro => registro.name == input[2]
                                   )
-                              ].value = parseInt(input[0], '10'))
+                              ].value = parseInt(input[0]))
                             : operationDB.push({
                                   name: input[2],
-                                  value: parseInt(input[0], '10')
+                                  value: parseInt(input[0])
                               });
                         askQuestion();
                     } else throw Error('El registro origen no existe.');
@@ -121,11 +125,11 @@ const askQuestion = () => {
                     input[2] == '->' &&
                     input[0] == 'NOT'
                 ) {
-                    if (Number.isInteger(parseInt(input[3], '10')))
+                    if (Number.isInteger(parseInt(input[3])))
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[1], '10'))
+                    let flag1 = !Number.isInteger(parseInt(input[1]))
                         ? true
                         : false; //Comprueba si el primer parámetro es un registro (true).
                     let flag2 = operationDB.find(
@@ -147,7 +151,7 @@ const askQuestion = () => {
                             operationDB[index_registro1].value;
                     } else if (!flag1)
                         //El primer elemento es un número.
-                        var valor_registro1 = parseInt(input[1], '10');
+                        var valor_registro1 = parseInt(input[1]);
                     else throw Error('El registro origen no existe.');
                     if (flag3) {
                         operationDB[
@@ -166,11 +170,11 @@ const askQuestion = () => {
                 }
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 else if (input.length == 5 && input[3] == '->') {
-                    if (Number.isInteger(parseInt(input[4], '10')))
+                    if (Number.isInteger(parseInt(input[4])))
                         throw Error(
                             'No se esta asignando el valor a un registro adecuado.'
                         );
-                    let flag1 = !Number.isInteger(parseInt(input[0], '10'))
+                    let flag1 = !Number.isInteger(parseInt(input[0]))
                         ? true
                         : false; //Comprueba si el primer parámetro es un registro (true).
                     let flag2 = operationDB.find(
@@ -178,7 +182,7 @@ const askQuestion = () => {
                     )
                         ? true
                         : false; //Comprueba si existe el registro origen (true).
-                    let flag3 = !Number.isInteger(parseInt(input[2], '10'))
+                    let flag3 = !Number.isInteger(parseInt(input[2]))
                         ? true
                         : false; //Comprueba si el segundo parámetro es un registro (true).
                     let flag4 = operationDB.find(
@@ -198,7 +202,7 @@ const askQuestion = () => {
                         var valor_registro1 =
                             operationDB[index_registro1].value;
                     } else if (!flag1)
-                        var valor_registro1 = parseInt(input[0], '10');
+                        var valor_registro1 = parseInt(input[0]);
                     else throw Error('El registro origen no existe.');
                     if (flag3 && flag4) {
                         let index_registro2 = operationDB.findIndex(
@@ -207,7 +211,7 @@ const askQuestion = () => {
                         var valor_registro2 =
                             operationDB[index_registro2].value;
                     } else if (!flag3)
-                        var valor_registro2 = parseInt(input[2], '10');
+                        var valor_registro2 = parseInt(input[2]);
                     else throw Error('El registro secundario no existe.');
                     switch (input[1]) {
                         case 'AND':
