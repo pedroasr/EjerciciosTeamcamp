@@ -22,10 +22,10 @@ const idSchema: FastifySchema = {
     }
 };
 
-var userDB = new UserDB;
-
 export function buildServer(logger: Logger): FastifyInstance {
+    const userDB = new UserDB;
     const server = fastify({ logger });
+    
     server.get('/users', {}, (req, reply) => {
         reply
             .status(200)
