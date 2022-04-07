@@ -1,0 +1,19 @@
+.Watcher {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
+
+.Time {
+    display: flex;
+    min-width: 20rem;
+    justify-content: center;
+}
+
+.Persona {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
