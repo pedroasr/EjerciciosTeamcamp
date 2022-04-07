@@ -1,0 +1,14 @@
+.App {
+  display: flex;
+  flex-direction: column;
+}
+.Title {
+  display: flex;
+  justify-content: center;
+}
+
+.Body {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}

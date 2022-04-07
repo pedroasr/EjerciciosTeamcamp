@@ -1,0 +1,26 @@
+.Watcher {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
+
+.Time {
+    display: flex;
+    min-width: 20rem;
+    justify-content: center;
+}
+
+.Person {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
+
+.isEvenOrOdd {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
