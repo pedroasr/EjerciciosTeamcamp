@@ -14,7 +14,7 @@ function App() {
                 <Watch currentTime={new Date()} timeZone={'Europe/London'} />
                 <Watch currentTime={new Date()} timeZone={'Europe/Madrid'} />
                 <Watch currentTime={new Date()} timeZone={'America/New_York'} />
-                <Person name="Pedro" surname="Sánchez"></Person>
+                <Person name="Pedro"  surname="Sánchez"></Person>
             </div>
             <div className={'Body'}>
                 <Time time={'700 ZULU'} timeZone={'NoWhere'} />
