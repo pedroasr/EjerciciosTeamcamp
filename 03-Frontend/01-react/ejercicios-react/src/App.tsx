@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import Watch, { Time } from './components/watch';
-import Person from './components/watch/Persona';
+import {Person} from './components/watch/Persona';
+import {IsEvenOrOdd} from './components/watch/numeros'
 
 import './styles.css';
 
@@ -15,6 +16,7 @@ function App() {
                 <Watch currentTime={new Date()} timeZone={'Europe/Madrid'} />
                 <Watch currentTime={new Date()} timeZone={'America/New_York'} />
                 <Person name="Pedro"  surname="Sánchez"></Person>
+                <IsEvenOrOdd></IsEvenOrOdd>
             </div>
             <div className={'Body'}>
                 <Time time={'700 ZULU'} timeZone={'NoWhere'} />

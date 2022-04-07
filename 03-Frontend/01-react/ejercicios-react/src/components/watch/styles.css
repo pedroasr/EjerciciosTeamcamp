@@ -11,7 +11,14 @@
     justify-content: center;
 }
 
-.Persona {
+.Person {
+    display: flex;
+    border: black solid medium;
+    padding: 1.5rem;
+    margin: 2rem;
+}
+
+.isEvenOrOdd {
     display: flex;
     border: black solid medium;
     padding: 1.5rem;

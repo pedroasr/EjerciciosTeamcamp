@@ -9,7 +9,7 @@ type PersonProps = {
 export function Person({ name, surname }: PersonProps) {
     return (
         <p className={'Person'}>
-            {name}: {surname}
+            {name} {surname}
         </p>
     );
 }
